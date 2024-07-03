@@ -1,34 +1,120 @@
+console.clear();
+
 var createError = require('http-errors');
 var express = require('express');
+var favicon = require('serve-favicon');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
 
+var viewsRouter = require('./routes/views');
+var livereload = require('livereload');
+var connectLiveReload = require('connect-livereload');
+const liveReloadServer = livereload.createServer();
+const fileUpload = require('express-fileupload');
+// https://expressjs.com/en/resources/middleware/multer.html
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+// Ping the browser
+
+// https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
+// https://github.com/livereload/livereload-js
+liveReloadServer.server.once('connection', () => {
+  setTimeout(() => {
+    liveReloadServer.refresh('/');
+  }, 100);
+});
+
+// ------------------
 var app = express();
+// ------------------
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+//needed by selectOptions.pug
+// could also be inserted by a router into res.locals.
+stationSettings = require('./stationSettings.json');
+app.locals.stationSettings = stationSettings;
+
+// Install live reload js:
+app.use(connectLiveReload());
 
 app.use(logger('dev'));
+
+// Serve favicon https://expressjs.com/en/resources/middleware/serve-favicon.html
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
+
+// view engine setup
+let ejs = require('ejs');
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+var qs = require('qs');
+app.set('query parser', function (str) {
+  return qs.parse(str, {
+    /* custom options */
+  });
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+var qs = require('qs');
+app.set('query parser', function (str) {
+  return qs.parse(str, {
+    /* custom options */
+  });
+});
+
+app.post('/setCookies', (req, res) => {
+  for (c in stationSettings) {
+    val = req.body[c];
+
+    // Turn returned values into cookies.
+    // By not removing url encoding I can maybe use val as a key.
+
+    res.cookie('stationSettings_' + c, val);
+  }
+  //  res.cookie('stationSettings', JSON.stringify(req.body));
+  res.locals['result'] = 'good';
+  res.render('submit');
+});
+
+app.post('/uploadADIF', (req, res) => {
+  let sampleFile;
+  let uploadPath;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  sampleFile = req.files.sampleFile;
+  uploadPath = __dirname + '/uploads/' + sampleFile.name;
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv(uploadPath, function (err) {
+    if (err) return res.status(500).send(err);
+
+    res.locals['result'] = uploadPath;
+    res.render('submit');
+  });
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
