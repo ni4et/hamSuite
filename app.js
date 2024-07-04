@@ -10,11 +10,11 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
 
-var viewsRouter = require('./routes/views');
+//var viewsRouter = require('./routes/views');
 var livereload = require('livereload');
 var connectLiveReload = require('connect-livereload');
 const liveReloadServer = livereload.createServer();
-const fileUpload = require('express-fileupload');
+
 // https://expressjs.com/en/resources/middleware/multer.html
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
@@ -35,7 +35,8 @@ var app = express();
 
 //needed by selectOptions.pug
 // could also be inserted by a router into res.locals.
-stationSettings = require('./stationSettings.json');
+// Locate the station settings file so that it will be accessable to client js
+stationSettings = require('./public/assets/stationSettings.json');
 app.locals.stationSettings = stationSettings;
 
 // Install live reload js:
@@ -47,15 +48,11 @@ app.use(logger('dev'));
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
 // view engine setup
+// EJS is preferred since C/P links all provide straight HTML.
+// Besides: VSCode does most of what pug would do in the editor.
 let ejs = require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
-var qs = require('qs');
-app.set('query parser', function (str) {
-  return qs.parse(str, {
-    /* custom options */
-  });
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -103,10 +100,25 @@ app.post('/uploadADIF', (req, res) => {
   });
 });
 
+// Files in 'public' appear at the top level.
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serves node_modules as /assets/npm, to facilite popper and bootstrap.
+// Urls for these are C/P with minimal editing.
+app.use('/assets/npm', express.static(path.join(__dirname, 'node_modules')));
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+/* GET file from views. */
+app.get('/\\w+', function (req, res, next) {
+  const view = req.url.substring(1);
+  console.log('app.js: view=', view);
+  //console.log('Views:cookies ', req.cookies);
+  // Cookies will determine socketio urls as well as some displayed values
+
+  res.render(view, { cookies: req.cookies, title: 'Big Title' });
+  //console.log('in index,js', { cookies: req.cookies });
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

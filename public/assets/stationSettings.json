@@ -1,0 +1,158 @@
+{
+  "operators": {
+    "title": "Operators",
+    "list": [
+      {
+        "call": "ni4et",
+        "name": "David"
+      },
+      {
+        "call": "wb4fen",
+        "name": "John"
+      }
+    ]
+  },
+  "spots": {
+    "title": "Spotting Node",
+    "list": [
+      {
+        "name": "wa9pie",
+        "telnet": "hrd.wa9pie.net",
+        "port": 8000,
+        "description": "WA9PIE-2 Global DX Spotting Network",
+        "user": "ni4et",
+        "password": ""
+      }
+    ]
+  },
+  "hamlib": {
+    "title": "Hamlib Host/Port",
+    "list": [
+      {
+        "name": "IC7300",
+        "host": "sam",
+        "port": 4532
+      },
+      {
+        "name": "IC7000",
+        "host": "sam",
+        "port": 4533
+      }
+    ]
+  },
+  "wsjtx": {
+    "title": "WSJTX Server",
+    "list": [
+      {
+        "name": "IC7300 Audio",
+        "bindPort": 2237,
+        "bindAddress": "0.0.0.0"
+      }
+    ]
+  },
+  "database": {
+    "title": "Database",
+    "list": [{ "name": "ni4etLog" }]
+  },
+  "qsl": {
+    "title": "QSL engine",
+    "list": [{ "name": "lotw", "user": "ni4et" }]
+  },
+  "activity": {
+    "title": "Contest or Activity",
+    "list": [
+      { "name": "casualOperations", "title": "Casual Hamming" },
+      { "name": "fieldDay", "title": "Field Day" },
+      { "name": "pota", "title": "Parks on the Air" }
+    ]
+  },
+  "solar": {
+    "title": "Solar Report",
+    "list": [
+      {
+        "name": "solarn0nbh",
+        "img": "https://www.hamqsl.com/solarn0nbh.php"
+      },
+      {
+        "name": "solarpic",
+        "img": "https://www.hamqsl.com/solarpic.php"
+      },
+      {
+        "name": "solarvhf",
+        "img": "https://www.hamqsl.com/solarvhf.php"
+      },
+      {
+        "name": "solar",
+        "img": "https://www.hamqsl.com/solar.php"
+      },
+      {
+        "name": "solarsmall",
+        "img": "https://www.hamqsl.com/solarsmall.php"
+      },
+      {
+        "name": "solarbrief",
+        "img": "https://www.hamqsl.com/solarbrief.php"
+      },
+      {
+        "name": "solar2",
+        "img": "https://www.hamqsl.com/solar2.php"
+      },
+      {
+        "name": "solarpich",
+        "img": "https://www.hamqsl.com/solarpich.php"
+      },
+      {
+        "name": "solar101pic",
+        "img": "https://www.hamqsl.com/solar101pic.php"
+      },
+      {
+        "name": "solar101vhf",
+        "img": "https://www.hamqsl.com/solar101vhf.php"
+      },
+      {
+        "name": "solar101vhfper",
+        "img": "https://www.hamqsl.com/solar101vhfper.php"
+      },
+      {
+        "name": "solar101vhfpic",
+        "img": "https://www.hamqsl.com/solar101vhfpic.php"
+      },
+      {
+        "name": "solar101sc",
+        "img": "https://www.hamqsl.com/solar101sc.php"
+      },
+      {
+        "name": "solarsun",
+        "img": "https://www.hamqsl.com/solarsun.php"
+      },
+      {
+        "name": "solargraph",
+        "img": "https://www.hamqsl.com/solargraph.php"
+      },
+      {
+        "name": "marston",
+        "img": "https://www.hamqsl.com/marston.php"
+      },
+      {
+        "name": "solarmuf",
+        "img": "https://www.hamqsl.com/solarmuf.php"
+      },
+      {
+        "name": "solarmap",
+        "img": "https://www.hamqsl.com/solarmap.php"
+      },
+      {
+        "name": "solarglobe",
+        "img": "https://www.hamqsl.com/solarglobe.php"
+      },
+      {
+        "name": "moonglobe",
+        "img": "https://www.hamqsl.com/moonglobe.php"
+      },
+      {
+        "name": "solarsystem",
+        "img": "https://www.hamqsl.com/solarsystem.php"
+      }
+    ]
+  }
+}

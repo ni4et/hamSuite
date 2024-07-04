@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>This is the test page. This page is in /public</h1>
+    <script>
+      var stationSettings = { nothing: 'nothing' };
+
+      // https://www.geeksforgeeks.org/read-json-file-using-javascript/
+      var myurl = '/assets/stationSettings.json';
+      function fetchJSONData(myurl) {
+        let rv = {};
+        fetch(myurl)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => (rv = data)) // console.log(data))
+          .catch((error) => console.error('Unable to fetch data:', error));
+        console.log('before return');
+        return rv;
+      }
+      rv = fetchJSONData('/assets/stationSettings.json');
+      console.dir(rv);
+    </script>
+  </body>
+</html>
+
+// possble use jquery $.getJSON("file.json", function(json) { console.log(json);
+// show the JSON file content into console });
