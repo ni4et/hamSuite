@@ -6,7 +6,7 @@
     "start": "node  ./bin/www",
     "trace": "node --trace-warnings bin/www",
     "dev": "nodemon ./bin/www",
-    "watch": "nodemon ./bin/www --watch . --watch routes --watch views --ext pug,html,js"
+    "watch": "nodemon ./bin/www --watch . --watch routes --watch views --ext ejs,html,js"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

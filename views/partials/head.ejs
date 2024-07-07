@@ -1,5 +1,6 @@
 <!-- Include at the top inside of the html tag -->
-<-- Pass title in as option. -->
+<!-- Pass title in as option. -->
+<% title=title||'HamSuite'; %>
 
 <head>
   <meta charset="utf-8" />
@@ -11,15 +12,12 @@
   <meta name="author" content="" />
   <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico" />
 
-  <title><%= title %></title>
-
   <!-- Bootstrap core CSS -->
-  <!-- Express maps '/assets/npm' to ' ./node_modules' locallly for minimal editing of links.-->
-  <link href="/assets/npm/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <style>
-    body {
-      padding-top: 50px;
-    }
-  </style>
+  <!-- Express maps '/assets/npm' to ' ./node_modules' locallly for minimal editing of links.DHT-->
+  <link
+    href="/assets/npm/bootstrap/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <% console.log(stationSettings) %>
+  <title><%- title %></title>
 </head>
