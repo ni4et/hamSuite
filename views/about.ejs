@@ -1,11 +1,13 @@
+<% title="HamSuite: About" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <%- include('partials/head'); %>
 
   <body class="container">
-  <div  class="w-50"> stuff </div>
-  <div class="w-50 "> 
-      
+
+
+
       <h3>Select options, radios, contests, and other things.</h3>
       <div class="row">
         <div class="col-lg">
@@ -16,7 +18,8 @@
             <%=vala.title%>
 
             <select class="form-select" aria-label="<%=vala.title %>">
-              <% for (const selection of vala.list ) { %>
+              <% for (const selection of vala.list ) { 
+                //console.log('selection',selection.name); %>
               <option value=<%=selection.name%> >  <%=selection.name%> </option>
 
               <% } %>
@@ -28,6 +31,5 @@
 
 
     <%- include('partials/footer'); %>
-    </div>
   </body>
 </html>

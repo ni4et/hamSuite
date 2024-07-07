@@ -32,16 +32,24 @@ liveReloadServer.server.once('connection', () => {
 var app = express();
 // ------------------
 
-//needed by selectOptions.pug
-// could also be inserted by a router into res.locals.
-// Locate the station settings file so that it will be accessable to client js
+// Load the station settings file so that server rendering can use it.
+
 stationSettings = require('./public/assets/stationSettings.json');
 app.locals.stationSettings = stationSettings;
 
 // Install live reload js:
 app.use(connectLiveReload());
 
-app.use(logger('dev'));
+// This logs almost all requests.
+// app.use(logger('dev'));
+// This logs only response codes >=400.
+app.use(
+  logger('common', {
+    skip: function (req, res) {
+      return res.statusCode < 400;
+    },
+  })
+);
 
 // Serve favicon https://expressjs.com/en/resources/middleware/serve-favicon.html
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
@@ -111,12 +119,9 @@ app.use('/', indexRouter);
 /* GET file from views. */
 app.get('/\\w+', function (req, res, next) {
   const view = req.url.substring(1);
-  console.log('app.js: view=', view);
-  //console.log('Views:cookies ', req.cookies);
-  // Cookies will determine socketio urls as well as some displayed values
 
-  res.render(view, { cookies: req.cookies, title: 'Big Title' });
-  //console.log('in index,js', { cookies: req.cookies });
+  // render any ejs file in
+  res.render(view, { cookies: req.cookies });
 });
 
 // catch 404 and forward to error handler
