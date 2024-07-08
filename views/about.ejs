@@ -15,9 +15,9 @@
           <%=vala.title%>
 
           <select class="form-select" aria-label="<%=vala.title %>">
-            <% for (const selection of vala.list ) {
+            <% for (const selection of vala.list ) { %>
 
-            <option value="<%" ="selection.name%">> <%=selection.name%></option>
+            <option value=<%="selection.name"%>> <%=selection.name%></option>
 
             <% } %>
           </select>
@@ -25,7 +25,7 @@
         <%}}%>
       </div>
     </div>
-
+    <%- include('partials/bootstrapjs'); %>
     <%- include('partials/footer'); %>
   </body>
 </html>
