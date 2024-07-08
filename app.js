@@ -121,7 +121,8 @@ app.get('/\\w+', function (req, res, next) {
   const view = req.url.substring(1);
 
   // render any ejs file in
-  res.render(view, { cookies: req.cookies });
+  console.dir(req.cookies);
+  res.render(view, { cookies: req.cookies, title: 'HamSuite (app.js)' });
 });
 
 // catch 404 and forward to error handler

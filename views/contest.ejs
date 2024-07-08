@@ -1,10 +1,10 @@
+
 <% title="Contest! Mode" %>
 <!DOCTYPE html>
 <html lang="en">
   <%- include('partials/head'); %>
-
-  <body class="container">
-    <header><%- include('partials/nav'); %></header>
+<body>
+<%- include('partials/nav.ejs'); %>
 
     <main>
       <div class="row">
@@ -23,6 +23,8 @@
       </div>
     </main>
 
-    <%- include('partials/footer'); %>
+    <%- include('partials/footer.ejs'); %>
+    <%- include('partials/bootstrapjs.ejs'); %>
+    
   </body>
 </html>

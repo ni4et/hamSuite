@@ -1,51 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <%- include('partials/head.ejs'); %>
+<body>
 
-  <body class="container">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Expand at sm</a>
+      <%- include('partials/head.ejs'); %>
 
-      <div class="collapse navbar-collapse" id="navbarsExample03">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form
-          class="form-inline my-2 my-md-0"
-          data-dashlane-rid="166a072df067b84c"
-          data-form-type=""
-        >
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Search"
-            data-dashlane-rid="9e69b8f6395ad604"
-            data-form-type=""
-          />
-        </form>
-      </div>
-    </nav>
 
-    <main>
-      <div class="jumbotron">
-        <h1>This is great</h1>
-        <p>Welcome to templating using EJS</p>
-      </div>
-    </main>
 
-    <%- include('partials/footer.ejs'); %>
-    <script src="/assets/npm/@popperjs/core/dist/umd/popper.min.js"></script>
-
-    <script src="/assets/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+      
+      <%- include('partials/bootstrapjs.ejs'); %>
   </body>
 </html>
