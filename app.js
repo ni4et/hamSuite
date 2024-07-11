@@ -118,6 +118,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Urls for these are C/P with minimal editing.
 app.use('/assets/npm', express.static(path.join(__dirname, 'node_modules')));
 
+// Just do a no-op get in order to sync the server's cookies with the client.
+// the event callback in the view does this as the last thing after
+// setting the cookie on the client. TODO less expensive way to do this?
+app.get(
+  '/refreshCookies',
+
+  function (req, res) {
+    res.send('Thank You!');
+  }
+);
 app.use('/', indexRouter);
 
 /* GET file from views. */
@@ -125,7 +135,7 @@ app.get('/\\w+', function (req, res, next) {
   const view = req.url.substring(1);
 
   // render any ejs file in
-  console.dir(req.cookies);
+
   res.render(view, {
     cookies: req.cookies,
     title: 'HamSuite (app.js)',

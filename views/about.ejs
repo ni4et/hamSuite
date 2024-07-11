@@ -9,15 +9,18 @@
     <div class="row">
       <div class="col-lg">
         <% for ( keya in stationSettings) { let vala = stationSettings[keya]; if
-        (vala.list) { %>
+        (vala.list) { 
+          let selectedOption=cookies['stationSettings_'+keya] ;%>
 
         <div class="padding mt-2">
           <%=vala.title%>
 
           <select class="form-select" id=<%-keya%>  aria-label="<%=vala.title %>">
-            <% for (const selection of vala.list ) { %>
-
-            <option value=<%=selection.name%>> <%=selection.name%></option>
+            <% for (const selection of vala.list ) {
+              // console.log('o=',selectedOption,'a=',selection.name);
+              selString=(selectedOption===selection.name)?' selected':''; %>
+            <%# console.log('selString= ',selString);%>
+            <option value=<%=selection.name%><%-selString%>> <%=selection.name%></option>
 
             <% } %>
           </select>
@@ -30,15 +33,15 @@
 
 
 
-
  <% for ( keya in stationSettings) { let vala = stationSettings[keya]; if
         (vala.list) { %> 
         <script>
         $("#<%-keya%>").on("input",function(event) {
           
-          let tmp="<%-keya%>="+  $(event.target).val()  +";  expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-          console.log(tmp);
+          let tmp='stationSettings_'+"<%-keya%>="+  $(event.target).val()  +";  expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+          //console.log(tmp);
           document.cookie = tmp;
+          fetch('/refreshCookies');
           }  );
         </script>
         <%}}%>
