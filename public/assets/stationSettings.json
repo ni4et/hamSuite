@@ -54,10 +54,6 @@
     "title": "Database",
     "list": [{ "name": "ni4etLog" }]
   },
-  "qsl": {
-    "title": "QSL engine",
-    "list": [{ "name": "lotw", "user": "ni4et" }]
-  },
   "activity": {
     "title": "Contest or Activity",
     "list": [

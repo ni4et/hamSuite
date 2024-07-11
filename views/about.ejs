@@ -14,10 +14,10 @@
         <div class="padding mt-2">
           <%=vala.title%>
 
-          <select class="form-select" aria-label="<%=vala.title %>">
+          <select class="form-select" id=<%-keya%>  aria-label="<%=vala.title %>">
             <% for (const selection of vala.list ) { %>
 
-            <option value=<%="selection.name"%>> <%=selection.name%></option>
+            <option value=<%=selection.name%>> <%=selection.name%></option>
 
             <% } %>
           </select>
@@ -25,6 +25,32 @@
         <%}}%>
       </div>
     </div>
+
+<script src="/assets/npm/jquery/dist/jquery.min.js"></script>
+
+
+
+
+ <% for ( keya in stationSettings) { let vala = stationSettings[keya]; if
+        (vala.list) { %> 
+        <script>
+        $("#<%-keya%>").on("input",function(event) {
+          
+          let tmp="<%-keya%>="+  $(event.target).val()  +";  expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+          console.log(tmp);
+          document.cookie = tmp;
+          }  );
+        </script>
+        <%}}%>
+
+
+
+
+
+
+
+
+
 
     <!-- The following atributes this as the source: -->
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script -->
@@ -41,7 +67,6 @@
 </script>
 
 
-    <%- include('partials/bootstrapjs'); %>
     <%- include('partials/footer'); %>
   </body>
 </html>

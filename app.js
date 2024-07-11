@@ -1,4 +1,8 @@
 console.clear();
+require('dotenv').config();
+
+// This is how items in user, system, and .env are accessed:
+//console.log(process.env.DEBUG);
 
 var createError = require('http-errors');
 var express = require('express');
@@ -122,7 +126,11 @@ app.get('/\\w+', function (req, res, next) {
 
   // render any ejs file in
   console.dir(req.cookies);
-  res.render(view, { cookies: req.cookies, title: 'HamSuite (app.js)' });
+  res.render(view, {
+    cookies: req.cookies,
+    title: 'HamSuite (app.js)',
+    view: view,
+  });
 });
 
 // catch 404 and forward to error handler
