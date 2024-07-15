@@ -7,6 +7,8 @@
 </head>
 <body>
   <p> cookies: </p>
-  <% cookies %>
+  <% for (const property in cookies) { %>
+ <p><%-property%> : <%-cookies[property]%> </p> 
+  <%}%>
 </body>
 </html>
