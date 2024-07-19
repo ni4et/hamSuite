@@ -4,19 +4,45 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-r = require('rethinkdb');
 
+// Load station settings json
 var stationSettingspath = path.join(
   __dirname,
   '../public/assets',
   'stationSettings.json'
 );
+var stationSettings = require(stationSettingspath);
+
+// Rethinkdb initialization
+r = require('rethinkdb');
+
+// https://expressjs.com/en/resources/middleware/multer.html
+const multer = require('multer');
+const upload = multer({}); // Returns the Multer object set for memory storage by default.
+
+//-----------------
+
+//router.use(express.json());
+//router.use(express.urlencoded({ extended: false }));
+
+// routes:
 // throw-away test and example function
-router.get('/', function (req, res, next) {
-  res.json({ a: 1 });
+// Place holder for now
+router.post('/profile', upload.none(), function (req, res, next) {
+  // req.body contains the text fields
+  console.log(req);
 });
 
-var stationSettings = require(stationSettingspath);
+router.post('/upload', upload.single('files'), function (req, res, next) {
+  // req.body will hold the text fields, if there were any
+  //console.log(req.file.buffer.toString());
+  console.dir(req.body);
+  console.dir(req);
+  res.json({ res: 'Thanks' });
+});
+
+//router.post('/upload', function (req, res, next) {
+// res.send('dummy');});
 
 //https://restfulapi.net/http-methods/#:~:text=HTTP%20Methods%201%201.%20HTTP%20GET%20Use%20GET,Summary%20of%20HTTP%20Methods%20...%207%207.%20Glossary
 

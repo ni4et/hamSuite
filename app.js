@@ -28,10 +28,6 @@ var livereload = require('livereload');
 var connectLiveReload = require('connect-livereload');
 const liveReloadServer = livereload.createServer();
 
-// https://expressjs.com/en/resources/middleware/multer.html
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-
 // Ping the browser
 
 // https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
@@ -55,8 +51,9 @@ app.locals.stationSettings = stationSettings;
 app.use(connectLiveReload());
 
 // This logs almost all requests.
-// app.use(logger('dev'));
+app.use(logger('dev'));
 // This logs only response codes >=400.
+/*
 app.use(
   logger('common', {
     skip: function (req, res) {
@@ -64,6 +61,7 @@ app.use(
     },
   })
 );
+*/
 
 // Serve favicon https://expressjs.com/en/resources/middleware/serve-favicon.html
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
