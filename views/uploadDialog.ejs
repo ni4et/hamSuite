@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/uploadDialog.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>File Upload</h1>
+      <form id="form" method="post" action="/" enctype="multipart/form-data">
+        <div class="input-group">
+          <label for="name">Memo for log:</label>
+          <input name="name" id="name" placeholder="Memo" />
+        </div>
+        <div class="input-group">
+          <label for="mode">Memo for log:</label>
+          <input name="mode" id="mode" />
+        </div>
+
+        <div class="input-group">
+          <label for="files">Select files</label>
+          <input id="files" name="files" type="file" />
+        </div>
+        <button class="submit-btn" type="submit">Upload</button>
+      </form>
+    </div>
+    <script src="/javascripts/uloadDialog.js"></script>
+  </body>
+</html>
