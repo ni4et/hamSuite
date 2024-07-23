@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var parseADIF = require('../lib/parseADIF.js');
 
 // Load station settings json
 var stationSettingspath = path.join(
@@ -35,11 +36,21 @@ router.post('/profile', upload.none(), function (req, res, next) {
 
 router.post('/upload', upload.single('files'), function (req, res, next) {
   // req.body will hold the text fields, if there were any
-  //console.log(req.file.buffer.toString());
-  console.dir(req.body);
-  console.dir(req);
-  res.json({ res: 'Thanks' });
+  console.log('before');
+  parseADIF.parseADIF(req.file.buffer, req.body, headerCallback, qsoCallback);
+  console.log('after');
+
+  res.json({
+    res: 'Thanks! The file: ' + req.file.originalname + ' has been uploaded.',
+  });
 });
+
+function headerCallback(header, options) {
+  console.log(header);
+}
+function qsoCallback(qso, options) {
+  console.log(qso);
+}
 
 //router.post('/upload', function (req, res, next) {
 // res.send('dummy');});
@@ -57,7 +68,7 @@ HTTP PATCH
   - log - this is the qsos logged
   - logMetadata - Record of uploads qsos uploaded will have the adif header, upload data, and found ADIF types specified in the upload.
   - callbook - Mostly qrz.com data and manual notes. Displayed during log entry if available.
-  - Not decided where to do json-adif and adif-json conversions yet. First going to try client side.
+
   */
 
 var connection = null;

@@ -4,28 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+      <link
+    href="/assets/npm/bootstrap/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <script src="/assets/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+  
     <link rel="stylesheet" href="/stylesheets/uploadDialog.css" />
   </head>
   <body>
     <div class="container">
       <h1>File Upload</h1>
+      <div class="mb-3 ">
       <form id="form" method="post" action="/" enctype="multipart/form-data">
         <div class="input-group">
-          <label for="name">Memo for log:</label>
-          <input name="name" id="name" placeholder="Memo" />
+          <label for="memo" class="form-label">Memo for log:</label>
+          <input name="memo" id="memo" placeholder="Memo"  class="form-control" />
         </div>
+
         <div class="input-group">
-          <label for="mode">Memo for log:</label>
-          <input name="mode" id="mode" />
-        </div>
+        <% const buttons=[['external','Import ADIF'],['lotwc', 'LOTW Confirmed'],['lotws','LOTW Submited']];%>
+        <fieldset>
+          <legend>Select upload mode:</legend>
+            <div id=ulModeDiv>
+
+            <%let checkFirst='checked' ; for (const n of buttons) { %>
+            <input type="radio" id=<%=n[0]%> name="ulMode" value=<%-n[0]%> <%-checkFirst%> class="form-check-input"/>
+            <label for=<%-n[0]%> class="form-check-label"> <%-n[1]%></label>
+
+          <%checkFirst='';}%>
+          </div>         
 
         <div class="input-group">
           <label for="files">Select files</label>
           <input id="files" name="files" type="file" />
-        </div>
+        </div>    
+        <p id=result>  </p>
         <button class="submit-btn" type="submit">Upload</button>
       </form>
     </div>
-    <script src="/javascripts/uloadDialog.js"></script>
+    </div>
+
+<script src="/assets/npm/jquery/dist/jquery.min.js"></script>
+    <script src="/javascripts/uploadDialog.js"></script>
   </body>
 </html>
