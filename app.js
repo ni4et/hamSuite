@@ -28,6 +28,19 @@ var livereload = require('livereload');
 var connectLiveReload = require('connect-livereload');
 const liveReloadServer = livereload.createServer();
 
+stationSettings = require('./public/assets/stationSettings.json');
+const stationSettingsDefault = {};
+
+for (let keya in stationSettings) {
+  // list of settings
+  let vala = stationSettings[keya]; // details of settings
+  if (vala.list) {
+    // if vala.list exists then vala[0] is the default option
+    stationSettingsDefault['stationSettings_' + keya] = vala.list[0].name;
+  }
+}
+// stationSettingsDefault will be merged with cookies for rendering
+//console.log(stationSettingsDefault);
 // Ping the browser
 
 // https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
@@ -44,7 +57,6 @@ var app = express();
 
 // Load the station settings file so that server rendering can use it.
 
-stationSettings = require('./public/assets/stationSettings.json');
 app.locals.stationSettings = stationSettings;
 
 // Install live reload js:
@@ -76,6 +88,17 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Merge the set cookies with the defaults so that everything will
+// have a setting when rendered whether or not a cookie was
+// actually set.
+
+app.use(function (req, res, next) {
+  let tmp = { ...stationSettingsDefault, ...req.cookies };
+  req.cookies = tmp;
+
+  next();
+});
 
 var qs = require('qs');
 app.set('query parser', function (str) {
