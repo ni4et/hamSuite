@@ -7,18 +7,58 @@ var path = require('path');
 var parseADIF = require('../lib/parseADIF.js');
 
 // Load station settings json
-var stationSettingspath = path.join(
+var stationSettingsPath = path.join(
   __dirname,
   '../public/assets',
   'stationSettings.json'
 );
-var stationSettings = require(stationSettingspath);
+var stationSettings = require(stationSettingsPath);
 
 // Rethinkdb initialization
 r = require('rethinkdb');
 
+let databases = null; // Gets filled in when the rethinldb is contactedq
+let conn = null;
+// IFFY pattern
+(async () => {
+  try {
+    conn = await r.connect({
+      host: 'localhost',
+      port: 28015,
+    });
+    databases = await r.dbList().run(conn);
+    //console.log(databases);
+  } catch {
+    console.log('in data.js: failed to open database, is it running?');
+  }
+})(); // () gets it called here.
+
+async function dbCheckAndCreate(database) {
+  try {
+    if (databases.indexOf(database) < 0) {
+      // The database does not exist
+      // Silently create the database called for and populate it with
+      // our canonical tables:
+      await r.dbCreate(database).run(conn);
+
+      const result = await Promise.all([
+        r.db(database).tableCreate('qso').run(conn),
+        r.db(database).tableCreate('meta').run(conn),
+        r.db(database).tableCreate('qrz').run(conn),
+      ]);
+      //console.log(result);
+      databases.push(database);
+    }
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 // https://expressjs.com/en/resources/middleware/multer.html
 const multer = require('multer');
+const { error } = require('console');
 const upload = multer({}); // Returns the Multer object set for memory storage by default.
 
 //-----------------
@@ -36,24 +76,36 @@ router.post('/profile', upload.none(), function (req, res, next) {
 
 router.post('/upload', upload.single('files'), function (req, res, next) {
   // req.body will hold the text fields, if there were any
-
-  let recordCount = parseADIF.parseADIF(
-    req.file.buffer,
-    req.body,
-    headerCallback,
-    qsoCallback
-  );
-
-  console.log(req.cookies);
+  let database = req.cookies.stationSettings_database; // From cookies or defaults
+  (async () => {
+    const go = await dbCheckAndCreate(database);
+    let metaInsertResult = await r
+      .db(database)
+      .table('meta')
+      .insert({})
+      .run(conn);
+    let recordCount = parseADIF.parseADIF(
+      req.file.buffer,
+      // pass the request body and the index to the metadata
+      {
+        ...req.body,
+        metaId: meta.metaInsertResult.generated_keys[0],
+        database: database,
+      },
+      headerCallback,
+      qsoCallback
+    );
+  })();
+  //console.log(req.cookies);
   res.json({
     res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
   });
 });
 
-function headerCallback(header, options) {
+async function headerCallback(header, options) {
   console.log(header);
 }
-function qsoCallback(qso, options) {
+async function qsoCallback(qso, options) {
   console.log(qso);
 }
 
