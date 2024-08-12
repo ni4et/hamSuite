@@ -52,8 +52,15 @@
   },
   "database": {
     "title": "Database",
-    "list": [{ "name": "ni4etLog" }]
+    "list": [
+      {
+        "name": "ni4etLog",
+        "rethinkDBHost": "localhost",
+        "rethinkDBPort": 28015
+      }
+    ]
   },
+
   "activity": {
     "title": "Contest or Activity",
     "list": [

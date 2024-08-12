@@ -14,12 +14,81 @@ var stationSettingsPath = path.join(
 );
 var stationSettings = require(stationSettingsPath);
 
+// https://expressjs.com/en/resources/middleware/multer.html
+const multer = require('multer');
+const { error } = require('console');
+const upload = multer({}); // Returns the Multer object set for memory storage by default.
+
+//-----------------
+
+//router.use(express.json());
+//router.use(express.urlencoded({ extended: false }));
+
+// routes:
+// throw-away test and example function
+// Place holder for now
+router.post('/profile', upload.none(), function (req, res, next) {
+  // req.body contains the text fields
+  console.log(req);
+});
+
+router.post('/upload', upload.single('files'), function (req, res, next) {
+  // req.body will hold the text fields, if there were any
+  let database = req.cookies.stationSettings_database; // From cookies or defaults
+
+  handler(req, res)
+    .then(recordCount)
+    .catch((error) => res.status(500).send(error.message));
+
+  res.json({
+    res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
+  });
+});
+
+async function headerCallback(header, options) {
+  console.log(header);
+}
+async function qsoCallback(qso, options) {
+  console.log(qso);
+}
+
+//router.post('/upload', function (req, res, next) {
+// res.send('dummy');});
+
+//https://restfulapi.net/http-methods/#:~:text=HTTP%20Methods%201%201.%20HTTP%20GET%20Use%20GET,Summary%20of%20HTTP%20Methods%20...%207%207.%20Glossary
+
+/*  Reqiired methods
+HTTP GET
+HTTP POST
+HTTP PUT
+HTTP DELETE
+HTTP PATCH
+*/
+/* Paths to be implemented: log, logMetaData, callBook
+  - log - this is the qsos logged
+  - logMetadata - Record of uploads qsos uploaded will have the adif header, upload data, and found ADIF types specified in the upload.
+  - callbook - Mostly qrz.com data and manual notes. Displayed during log entry if available.
+
+  */
+
+module.exports = router;
+
+//=============================================================\\
+// Database access routines:
+//=============================================================\\
+// no async/await above here:
+
 // Rethinkdb initialization
 r = require('rethinkdb');
+var connection = null;
+r.connect({ host: 'localhost', port: 28015 }, function (err, conn) {
+  if (err) throw err;
+  connection = conn;
+});
 
 let databases = null; // Gets filled in when the rethinldb is contactedq
 let conn = null;
-// IFFY pattern
+// IFFE pattern
 (async () => {
   try {
     conn = await r.connect({
@@ -56,28 +125,9 @@ async function dbCheckAndCreate(database) {
   }
 }
 
-// https://expressjs.com/en/resources/middleware/multer.html
-const multer = require('multer');
-const { error } = require('console');
-const upload = multer({}); // Returns the Multer object set for memory storage by default.
+// - upload support:
+async uploadHandler(req,res){
 
-//-----------------
-
-//router.use(express.json());
-//router.use(express.urlencoded({ extended: false }));
-
-// routes:
-// throw-away test and example function
-// Place holder for now
-router.post('/profile', upload.none(), function (req, res, next) {
-  // req.body contains the text fields
-  console.log(req);
-});
-
-router.post('/upload', upload.single('files'), function (req, res, next) {
-  // req.body will hold the text fields, if there were any
-  let database = req.cookies.stationSettings_database; // From cookies or defaults
-  (async () => {
     const go = await dbCheckAndCreate(database);
     let metaInsertResult = await r
       .db(database)
@@ -95,43 +145,5 @@ router.post('/upload', upload.single('files'), function (req, res, next) {
       headerCallback,
       qsoCallback
     );
-  })();
-  //console.log(req.cookies);
-  res.json({
-    res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
-  });
-});
+  };
 
-async function headerCallback(header, options) {
-  console.log(header);
-}
-async function qsoCallback(qso, options) {
-  console.log(qso);
-}
-
-//router.post('/upload', function (req, res, next) {
-// res.send('dummy');});
-
-//https://restfulapi.net/http-methods/#:~:text=HTTP%20Methods%201%201.%20HTTP%20GET%20Use%20GET,Summary%20of%20HTTP%20Methods%20...%207%207.%20Glossary
-
-/*  Reqiired methods
-HTTP GET
-HTTP POST
-HTTP PUT
-HTTP DELETE
-HTTP PATCH
-*/
-/* Paths to be implemented: log, logMetaData, callBook
-  - log - this is the qsos logged
-  - logMetadata - Record of uploads qsos uploaded will have the adif header, upload data, and found ADIF types specified in the upload.
-  - callbook - Mostly qrz.com data and manual notes. Displayed during log entry if available.
-
-  */
-
-var connection = null;
-r.connect({ host: 'localhost', port: 28015 }, function (err, conn) {
-  if (err) throw err;
-  connection = conn;
-});
-
-module.exports = router;
