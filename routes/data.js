@@ -33,24 +33,20 @@ router.post('/profile', upload.none(), function (req, res, next) {
 });
 
 router.post('/upload', upload.single('files'), function (req, res, next) {
+  let recordCount = 777;
   // req.body will hold the text fields, if there were any
-  let database = req.cookies.stationSettings_database; // From cookies or defaults
-
-  handler(req, res)
-    .then(recordCount)
-    .catch((error) => res.status(500).send(error.message));
-
-  res.json({
-    res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
-  });
+  uploadHandler(req, res)
+    .then((count) => {
+      console.log('count= ', count);
+      recordCount = count;
+      console.log('uploadHandler.then: ');
+    })
+    .then(() => {
+      res.json({
+        res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
+      });
+    });
 });
-
-async function headerCallback(header, options) {
-  console.log(header);
-}
-async function qsoCallback(qso, options) {
-  console.log(qso);
-}
 
 //router.post('/upload', function (req, res, next) {
 // res.send('dummy');});
@@ -103,6 +99,7 @@ let conn = null;
 })(); // () gets it called here.
 
 async function dbCheckAndCreate(database) {
+  console.log('dbCheckAndCreate ', database);
   try {
     if (databases.indexOf(database) < 0) {
       // The database does not exist
@@ -126,24 +123,30 @@ async function dbCheckAndCreate(database) {
 }
 
 // - upload support:
-async uploadHandler(req,res){
+async function uploadHandler(req, res) {
+  console.log('uploadHandler()');
+  database = req.cookies.stationSettings_database;
+  const go = await dbCheckAndCreate(database);
 
-    const go = await dbCheckAndCreate(database);
-    let metaInsertResult = await r
-      .db(database)
-      .table('meta')
-      .insert({})
-      .run(conn);
-    let recordCount = parseADIF.parseADIF(
-      req.file.buffer,
-      // pass the request body and the index to the metadata
-      {
-        ...req.body,
-        metaId: meta.metaInsertResult.generated_keys[0],
-        database: database,
-      },
-      headerCallback,
-      qsoCallback
-    );
-  };
+  let recordCount = await parseADIF.parseADIF(
+    req.file.buffer,
+    // pass the request body and the index to the metadata
+    {
+      ...req.body,
+      //metaId: meta.metaInsertResult.generated_keys[0],
+      database: database,
+    },
+    headerCallback,
+    qsoCallback
+  );
+  return Promise.resolve(recordCount);
+}
 
+async function headerCallback(hdr, options) {
+  console.log('headerCallback() ', hdr);
+  return 6969;
+}
+async function qsoCallback(qso, options) {
+  console.log('qsoCallback() ', qso);
+  return Promise.resolve('qsoCallback');
+}

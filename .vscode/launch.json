@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
+      "command": "npm start",
+      "name": "Run npm start",
       "request": "launch",
-      "name": "Open about.ejs",
-      "file": "c:\\WORK\\@EXPRESS\\hamSuite.0\\views\\about.ejs"
+      "type": "node-terminal"
     }
   ]
 }
