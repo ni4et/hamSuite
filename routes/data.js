@@ -1,3 +1,4 @@
+'use strict';
 // Database access:
 // all requests and responses are json
 
@@ -75,7 +76,7 @@ module.exports = router;
 // no async/await above here:
 
 // Rethinkdb initialization
-r = require('rethinkdb');
+const r = require('rethinkdb');
 var connection = null;
 r.connect({ host: 'localhost', port: 28015 }, function (err, conn) {
   if (err) throw err;
@@ -125,7 +126,7 @@ async function dbCheckAndCreate(database) {
 // - upload support:
 async function uploadHandler(req, res) {
   console.log('uploadHandler()');
-  database = req.cookies.stationSettings_database;
+  const database = req.cookies.stationSettings_database;
   const go = await dbCheckAndCreate(database);
 
   let recordCount = await parseADIF.parseADIF(
@@ -144,7 +145,22 @@ async function uploadHandler(req, res) {
 
 async function headerCallback(hdr, options) {
   console.log('headerCallback() ', hdr);
-  return 6969;
+  if (options.metaId) {
+    const updateResult = await r
+      .db(options.database)
+      .table('meta')
+      .get(options.metaId)
+      .update(hdr)
+      .run(conn);
+    console.log('headerCallback() result= ', updateResult);
+  } else {
+    const result = await r
+      .db(options.database)
+      .table('meta')
+      .insert(hdr)
+      .run(conn);
+    options.metaId = result.generated_keys[0];
+  }
 }
 async function qsoCallback(qso, options) {
   console.log('qsoCallback() ', qso);
