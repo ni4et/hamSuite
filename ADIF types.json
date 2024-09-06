@@ -1,0 +1,44 @@
+const types={
+    {ADDRESS:'M'} ,//:'As it will appear on the mailing label
+    {AGE:'N'},
+    {ARRL_SECT:'C'},
+    {BAND:'C'} ,//:'160M, 80M, 40M, 30M, 20M, 17M, 15M, 12M, 10M, 6M, 2M, 70CM,23CM...see table below
+    {CALL:'C'},
+    {CNTY:'C'}  ,//:'US County in the format STATE,COUNTY. For example GA,BARROW. Use CQ County list
+    {COMMENT:'C'} ,//:'Comment field for QSO
+    {CONT:'C'} ,//:'Continent: NA,SA,EU,AF,OC,AS
+    {CONTEST_ID:'C'} ,//:'Contest Indentifier -- SS, ARRLVHF, ARRLDX, etc.
+    {CQZ:'N'} ,//:'CQ Zone
+    {DXCC:'N'} ,//:'Numeric identifiers from ARRL. See table below
+    {FREQ:'N'} ,//:'in Megahertz
+    {GRIDSQUARE:'C'} ,//:'4, 6, or 8 or however many characters
+    {IOTA:'C'} ,//:'HYPHEN MUST BE INCLUDED. Example: NA-001 IOTA PROVIDES DISK IN THIS FORMAT
+    {ITUZ:'N'} ,//:'ITU Zone
+    {MODE:'C'} ,//:'SSB, CW, RTTY, TOR=AMTOR, PKT, AM, FM, SSTV, ATV, PAC=PACTOR,CLO=CLOVER
+    {NAME:'C'} ,//'},
+    {NOTES:'M'} ,//:'Long text for digital copy, third party traffic, etc.
+    {OPERATOR:'C'} ,//:'Callsign of person logging the QSO
+    {PFX:'C'} ,//:'WPX prefix
+    {PROP_MODE:'C'} ,//'},
+    {QSLMSG:'M'} ,//:'Personal message to appear on qsl card
+    {QSLRDATE:'D'} ,//:'QSL Rcvd Date
+    {QSLSDATE:'D'} ,//:'QSL Sent Date
+    {QSL_RCVD:'C'} ,//:'Y=Yes, N=No, R=Requested, I=Ignore or Invalid
+    {QSL_SENT:'C'} ,//:'Y=Yes, N=No, R=Requested, I=Ignore or Invalid
+    {QSL_VIA:'C'},
+    {QSO_DATE:'D'} ,//:'YYYYMMDD in UTC
+    {QTH:'C'},
+    {RST_RCVD:'C'},
+    {RST_SENT:'C'},
+    {RX_PWR:'N'} ,//:'Power of other station in Watts
+    {SAT_MODE:'C'} ,//:'Satellite Mode
+    {SAT_NAME:'C'} ,//:'Name of satellite
+    {SRX:'N:'} ,//Received serial number for a contest QSO
+    {STATE:'C'} ,//:'US state
+    {STX:'N'} ,//:'Transmitted serial number for a contest QSO
+    {TEN_TEN:'N'},
+    {TIME_OFF:'C'} ,//:'HHMM or HHMMSS in UTC
+    {TIME_ON:'C'} ,//:'HHMM or HHMMSS in UTC
+    {TX_PWR:'N'} ,//:'Power of this station in watts
+    {VE_PROV:'C'} //:'2-letter abbreviations: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
+    };
