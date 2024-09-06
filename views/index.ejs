@@ -23,7 +23,13 @@
       </div>
     </main>
 
-    <%- include('partials/footer.ejs'); %>
-    <%- include('partials/bootstrapjs.ejs'); %>
+    <%-include('partials/footer.ejs'); %>
+    <%-include('partials/bootstrapjs.ejs'); %>
+    <%-include('partials/socketio.ejs'); %>
+
+    <script>
+      const socket = io();
+      socket.emit("chat message", "hallo chat message");
+    </script>
   </body>
 </html>

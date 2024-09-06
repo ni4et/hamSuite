@@ -34,18 +34,19 @@ router.post('/profile', upload.none(), function (req, res, next) {
 });
 
 router.post('/upload', upload.single('files'), function (req, res, next) {
-  let recordCount = 777;
+  let recordCount = {};
   // req.body will hold the text fields, if there were any
   if (req.file) {
     uploadHandler(req, res)
       .then((count) => {
         console.log('count= ', count);
         recordCount = count;
-        console.log('uploadHandler.then: ');
       })
       .then(() => {
         res.json({
-          res: `Thanks! ${recordCount} qsos from  ${req.file.originalname} imported.`,
+          res: `Thanks! ${JSON.stringify(recordCount)} qsos from  ${
+            req.file.originalname
+          } imported.`,
         });
       });
   } else {
@@ -168,7 +169,7 @@ async function headerCallback(hdr, options) {
 }
 async function qsoCallback(qso, options) {
   // Variables to be set inside if statements:
-  let wl;
+  let wl = 1; // In case none specified
   let lnWl;
 
   // converts the qso times to native dates:
@@ -205,13 +206,23 @@ async function qsoCallback(qso, options) {
     wl = 300 / qso.freq;
   } else if (qso.band) {
     let band = qso.band;
-    if (band.endsWith('mm')) {
+    if (band === 'submm') {
+      wl = 0.001;
+    } else if (band.endsWith('mm')) {
       wl = 0.001 * Number(band.substring(0, band.length - 2));
     } else if (band.endsWith('cm')) {
       wl = 0.01 * Number(band.substring(0, band.length - 2));
     } else if (band.endsWith('m')) {
       wl = Number(band.substring(0, band.length - 1));
-    } else throw 'No band or frequency specified!';
+    } // Default wl=1
+  }
+  if (wl < 0.001) {
+    // Shortest wl
+    wl = 0.001;
+  }
+  if (wl > 2190) {
+    // longest wl
+    wl = 2190;
   }
   let pseudoMS = Math.log(wl) * 128;
   // The result here is a mostly unique primary key
@@ -220,6 +231,7 @@ async function qsoCallback(qso, options) {
   if (options.metaId) {
     qso._metaId = options.metaId;
   }
+  console.log(qso.time_on, qso.id);
   const result = await r
     .db(options.database)
     .table('qso')
@@ -230,7 +242,5 @@ async function qsoCallback(qso, options) {
     })
     .run(conn);
 
-  console.log('qsoCallback() ', result);
-
-  return Promise.resolve('qsoCallback');
+  return Promise.resolve(result);
 }
