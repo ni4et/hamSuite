@@ -3,6 +3,9 @@ Goals for the project:
   Run on Win, Mac, and Unix-ish platform that will support Node.js. The database needn't be on the same server.
   Base it on a no-sql database (ReThink db): The schema will be ADIF key words.
   Run the entire user interface out of a web browser.
+  Serve everthing locally, ie: bootstrap, jQuery or socketio-client, so that the application is usable without a network connnection to the internet.  This is to support Field Day, POTA, or other field activities.
+
+  
   Archetecture: node.js, express, ejs page rendering, Socket.IO.   No complicated UI frameworks.
   Support contests, rag chewing, DX, wsjtx.
   Bonus points, run multiple contest stations out of the same node server and database.
