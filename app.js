@@ -1,4 +1,7 @@
-//console.clear();
+const dbg = require("./bin/dbg");
+dbg.app.enabled = true;
+dbg.app("App debug enabled!"); //console.clear();
+
 console.log(
   "========================================================================"
 );

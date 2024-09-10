@@ -24,6 +24,16 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
+///////
+// https://socket.io/docs/v4/server-initialization/#with-express
+
+const { Server } = require("socket.io");
+
+var io = new Server(server, {
+  /* options */
+});
+
+///////
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -32,6 +42,22 @@ var server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+// https://socket.io/docs/v4/server-application-structure/#each-file-registers-its-own-event-handlers
+// A js function in the client will initiate the connection message.
+// io.on will call registerXXX functions with the socket so that the events of interest can be registered.
+
+io.on("connection", (socket) => {
+  dbg.www("On connection");
+
+  socket.on("chat message", (msg) => {
+    dbg.www("msg " + msg);
+  });
+  // {registerXXXXX}=require('xxxx');
+  // registerXXXXX(io, socket);  -
+  // event handlers that are needed will be resgistered in the xxxx module.
+  // This makes the most sense with my application structure.
+});
 
 /**
  * Normalize a port into a number, string, or false.
