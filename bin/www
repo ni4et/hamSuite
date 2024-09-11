@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-const dbg = require("../bin/dbg");
+const dbg = require("../lib/dbg");
 dbg.www.enabled = true;
 dbg.www("WWW debug enabled!");
 

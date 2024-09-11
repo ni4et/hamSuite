@@ -1,4 +1,4 @@
-const dbg = require("./bin/dbg");
+const dbg = require("./lib/dbg");
 dbg.app.enabled = true;
 dbg.app("App debug enabled!"); //console.clear();
 
