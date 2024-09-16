@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "node-red-contrib-wsjt-x-master/node-red-contrib-wsjt-x-master"
+    }
+  ],
+  "settings": {}
+}

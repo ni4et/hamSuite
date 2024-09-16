@@ -1,21 +1,11 @@
-const dbg = require("../lib/dbg");
-dbgp = dbg.wsjtx;
-
-dbgp.enabled = true;
-//dbgp(" debug enabled!");
-
 //const cluster = require('node:cluster');
 const dgram = require("node:dgram");
 const server = dgram.createSocket("udp4");
-const parser = require("../lib/wsjt-x-parser");
-
+const parser = require("./wsjt-x-parser");
+server.Gooo = "myPrefix";
 var clientInfo;
-// For the socket.io interface to the client
 
-var socket = null; // emits to socket
-var io = null; // inbound events on io
-
-//console.log(server);
+console.log(server);
 server.on("error", (err) => {
   console.error(`server error\n${err.stack}`);
   server.close();
@@ -34,18 +24,8 @@ server.on("message", (msg, rinfo) => {
       message: decodedMsg.message,
       type: decodedMsg.message_decode.type,
       time: decodedMsg.time,
-      de_call: decodedMsg.de_call,
     };
-    socket.emit("decode", decode);
-
-    //console.log(decode);
-  } else if (decodedMsg.type == "status") {
-    dbgp(decodedMsg);
-    if (socket) {
-      decodedMsg.freqency = Number(decodedMsg.freqency);
-      socket.emit("status", decodedMsg);
-      dbgp(decodedMsg.time);
-    }
+    console.log(decode);
   }
 });
 
@@ -55,15 +35,5 @@ server.on("listening", () => {
 });
 
 server.bind(2237, "0.0.0.0");
-module.exports = registerWSJTX;
-function registerWSJTX(io_in, socket_in) {
-  dbgp("registerWSJTX");
-  socket = socket_in; // Grab for local use
-  // do your emits on socket.
-  io = io_in;
-
-  // Register 'on' methods for events from the client.
-  // none at this time.
-}
 
 setTimeout(() => {}, 1000);

@@ -10,6 +10,8 @@
     "lint": "ejslint views/about.ejs"
   },
   "dependencies": {
+    "binary-parser": "^2.2.1",
+    "binary-parser-encoder": "^1.5.3",
     "bootstrap": "^5.3.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

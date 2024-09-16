@@ -14,15 +14,15 @@
             <p>Welcome to templating using EJS</p>
           </div>
         </div>
-
-        <div class="col-sm-4">
-          <div class="well">
-            <h3>Look I'm A Sidebar!</h3>
-          </div>
-        </div>
       </div>
     </main>
-
+    <script>
+      const socket = io();
+      socket.emit("chat message", "hallo chat message");
+      socket.on("status", (content) => {
+        console.log(content);
+      });
+    </script>
     <%- include('partials/footer.ejs'); %>
   </body>
 </html>

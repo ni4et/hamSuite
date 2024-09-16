@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li.bar {
+        display: inline;
+        min-width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="etchasketch"
+      style="border: 1px solid #000000"
+      width="500"
+      height="800"
+    >
+    </canvas>
+
+    <script src="/assets/npm/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/npm/socket.io/client-dist/socket.io.js"></script>
+    <script>
+      var msgCache = {};
+
+      const socket = io();
+      socket.emit("chat message", "hallo there chat message");
+      /*       socket.on("status", (content) => {
+               console.log(content);
+               $("#configuration").text(content.configuration_name);
+               $("#mode").text("MODE: " + content.tx_mode);
+
+               $("#freq").text("FREQUENCY: " + content.freqency / 1000);
+             });
+        */
+
+      socket.on("decode", (message) => {
+        //console.log(message.de_call, message);
+        msgCache[message.de_call] = message;
+        show(message.time);
+      });
+
+      function show(showTime) {
+        var c = document.getElementById("etchasketch");
+        var ctx = c.getContext("2d");
+        ctx.font = "20px Arial";
+        for (i in msgCache) {
+          let phase = (msgCache[i].time / 15000) % 2;
+          if (showTime - 15000 < msgCache[i].time) {
+            ctx.clearRect(
+              10 + phase * 400,
+              (msgCache[i].delta_frequency - 400) / 3,
+              400,
+              22
+            );
+            ctx.fillText(
+              msgCache[i].message,
+              10 + phase * 400,
+              (msgCache[i].delta_frequency - 400) / 3
+            );
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
