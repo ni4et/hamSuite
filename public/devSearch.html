@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/data/download">
+      <label for="call">First name:</label><br />
+      <input
+        type="text"
+        id="call"
+        name="call"
+        value=""
+        placeholder="Callsign"
+      /><br />
+
+      <label for="startDate">Starting Date:</label>
+      <input type="date" id="startDate" name="startDate" />
+      <label for="endDate">Ending Date:</label>
+      <input type="date" id="endDate" name="endDate" />
+
+      <input type="checkbox" id="lotw" name="lotw" value="Y" />
+      <label for="lotw">LOTW New Submission</label><br />
+
+      <input type="checkbox" id="download" name="download" value="Y" />
+      <label for="download">Download</label><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
