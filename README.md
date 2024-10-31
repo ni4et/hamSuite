@@ -1,3 +1,12 @@
+=======================================================================================================================
+
+A few weeks ago I recieved a scary cancer diagnosis.  
+
+I expect to beat it of course but I'm looking at multiple surgeries and months of chemo. I have a pallative procedure scheduled for November 1 that will help me eat in confort.  Surgery will come after 4 months of initial chemo and then to be followed by more chemo.  I may make progress here during this time depending. We will see.
+
+===========================================================================================================================
+
+
 Unable to find a Linux ham radio logging that met my desires after losing both my windows laptops to a ransom ware attack I launched an overly ambitious project to develop my own. I was using HamRadioDeluxe.  I doubt if I can ever finish it but I'm having fun with it anyway. Experienced JS progrmmers will cringe at my code, after all its 40+ years ago I started with C/C++, old habits die hard.
 Goals for the project:
   Run on Win, Mac, and Unix-ish platform that will support Node.js. The database needn't be on the same server.
