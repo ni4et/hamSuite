@@ -6,6 +6,15 @@ I expect to beat it of course but I'm looking at multiple surgeries and months o
 
 ===========================================================================================================================
 
+update
+December 29,3 months after diagnosis. 
+Im actually feeling better but Im on a chemo break since the clinic isnt open on the day of the week that I would normally go in.  So 
+it will three weeks instead of two weeks this time. 
+The palliative bile duct stent helped a lot, made my liver very happy. Im taking enzymes to replace pancreas exocrine function.  
+Main thing is I feel like the chemo is doing something.  Maybe 5 weeks from now we can think about scheduling surgery.  fun, fun, fun.  
+
+
+####################################################################
 
 Unable to find a Linux ham radio logging that met my desires after losing both my windows laptops to a ransom ware attack I launched an overly ambitious project to develop my own. I was using HamRadioDeluxe.  I doubt if I can ever finish it but I'm having fun with it anyway. Experienced JS progrmmers will cringe at my code, after all its 40+ years ago I started with C/C++, old habits die hard.
 Goals for the project:
