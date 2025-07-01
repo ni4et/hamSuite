@@ -46,7 +46,6 @@ for (let keya in stationSettings) {
 }
 // stationSettingsDefault will be merged with cookies for rendering
 //console.log(stationSettingsDefault);
-// Ping the browser
 
 // https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
 // https://github.com/livereload/livereload-js

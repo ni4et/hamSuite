@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+'use strict';
 
 /**
  * Module dependencies.
@@ -6,7 +6,6 @@
 //const dbg = require("../lib/dbg");
 //dbg.www.enabled = true;
 //dbg.www("WWW debug enabled!");
-
 const app = require('../app');
 //const debug = require("debug")("hamsuite.0:server");
 const http = require('http');
@@ -87,5 +86,5 @@ function onListening() {
   //debug('Listening on ' + bind);
 }
 
-initSocketIO = require('../sockets/socket_io_init.js');
+var initSocketIO = require('../sockets/socket_io_init.js');
 initSocketIO(server);
