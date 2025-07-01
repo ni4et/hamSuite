@@ -91,7 +91,7 @@ module.exports = router;
 
 // Rethinkdb initialization
 const r = require('rethinkdb');
-let connection = null;
+var connection = null;
 r.connect({ host: 'localhost', port: 28015 }, function (err, conn) {
   if (err) throw err;
   connection = conn;
@@ -177,7 +177,7 @@ async function headerCallback(hdr, options) {
   }
 }
 async function qsoCallback(qso, options) {
-  // constiables to be set inside if statements:
+  // Variables to be set inside if statements:
   let wl = 1; // In case none specified
   let lnWl;
 
