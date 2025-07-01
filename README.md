@@ -1,38 +1,41 @@
 =======================================================================================================================
 
-A few weeks ago I recieved a scary cancer diagnosis.  
+A few weeks ago I recieved a scary cancer diagnosis.
 
-I expect to beat it of course but I'm looking at multiple surgeries and months of chemo. I have a pallative procedure scheduled for November 1 that will help me eat in confort.  Surgery will come after 4 months of initial chemo and then to be followed by more chemo.  I may make progress here during this time depending. We will see.
+I expect to beat it of course but I'm looking at multiple surgeries and months of chemo. I have a pallative procedure scheduled for November 1 that will help me eat in confort. Surgery will come after 4 months of initial chemo and then to be followed by more chemo. I may make progress here during this time depending. We will see.
 
 ===========================================================================================================================
 
 update
-December 29,3 months after diagnosis. 
-Im actually feeling better but Im on a chemo break since the clinic isnt open on the day of the week that I would normally go in.  So 
-it will three weeks instead of two weeks this time. 
+December 29,3 months after diagnosis.
+Im actually feeling better but Im on a chemo break since the clinic isnt open on the day of the week that I would normally go in. So
+it will three weeks instead of two weeks this time.
 The palliative bile duct stent helped a lot, made my liver very happy. Im taking enzymes to replace pancreas exocrine function.  
-Main thing is I feel like the chemo is doing something.  Maybe 5 weeks from now we can think about scheduling surgery.  fun, fun, fun.  
-
+Main thing is I feel like the chemo is doing something. Maybe 5 weeks from now we can think about scheduling surgery. fun, fun, fun.
 
 ####################################################################
 
-Unable to find a Linux ham radio logging that met my desires after losing both my windows laptops to a ransom ware attack I launched an overly ambitious project to develop my own. I was using HamRadioDeluxe.  I doubt if I can ever finish it but I'm having fun with it anyway. Experienced JS progrmmers will cringe at my code, after all its 40+ years ago I started with C/C++, old habits die hard.
+Unable to find a Linux ham radio logging that met my desires after losing both my windows laptops to a ransom ware attack I launched an overly ambitious project to develop my own. I was using HamRadioDeluxe. I doubt if I can ever finish it but I'm having fun with it anyway. Experienced JS progrmmers will cringe at my code, after all its 40+ years ago I started with C/C++, old habits die hard.
 Goals for the project:
-  Run on Win, Mac, and Unix-ish platform that will support Node.js. The database needn't be on the same server.
-  Base it on a no-sql database (ReThink db): The schema will be ADIF key words.
-  Run the entire user interface out of a web browser.
-  Serve everthing locally, ie: bootstrap, jQuery or socketio-client, so that the application is usable without a network connnection to the internet.  This is to support Field Day, POTA, or other field activities.
+Run on Win, Mac, and Unix-ish platform that will support Node.js. The database needn't be on the same server.
+Base it on a no-sql database (ReThink db): The schema will be ADIF key words.
+Run the entire user interface out of a web browser.
+Serve everthing locally, ie: bootstrap, jQuery or socketio-client, so that the application is usable without a network connnection to the internet. This is to support Field Day, POTA, or other field activities.
 
-  
-  Archetecture: node.js, express, ejs page rendering, Socket.IO.   No complicated UI frameworks.
-  Support contests, rag chewing, DX, wsjtx.
-  Bonus points, run multiple contest stations out of the same node server and database.
-  All log inports, exports, and integration with LOTW and qrz are on web pages and work across the home or contest LAN.
-  Integrate with radio via hamlib.
-  Itegrate as mush public software as possible to meet goals.
+Archetecture: node.js, express, ejs page rendering, Socket.IO. No complicated UI frameworks.
+Support contests, rag chewing, DX, wsjtx.
+Bonus points, run multiple contest stations out of the same node server and database.
+All log inports, exports, and integration with LOTW and qrz are on web pages and work across the home or contest LAN.
+Integrate with radio via hamlib.
+Itegrate as mush public software as possible to meet goals.
 
-  I have about 15% of it done but it is moving faster as I gain comfort with full stack Javascript.
-  
-  Its here so that I can move the code to other machines.  My development laptop is windows but the station computer is a seprate Linux laptop at my station.
-  NI4ET is my callsign on Ham Radio.  I can be contacted via arrl.net.
-  
+I have about 15% of it done but it is moving faster as I gain comfort with full stack Javascript.
+
+Its here so that I can move the code to other machines. My development laptop is windows but the station computer is a seprate Linux laptop at my station.
+NI4ET is my callsign on Ham Radio. I can be contacted via arrl.net.
+
+===================================================================================
+July 1, 2025:
+I'm still here. I have been slowly working my way back into it but I haven't wasted
+my downtime either. I have learned a lot so the first thing to do is clean up some of
+my earlier foibles.
