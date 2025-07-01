@@ -1,0 +1,43 @@
+<!-- ...existing code... -->
+<main>
+  <!-- Status Bar -->
+  <div
+    id="status-bar"
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #222;
+      color: #fff;
+      padding: 4px 12px;
+      font-size: 0.95em;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    "
+  >
+    <div><strong>Label 1:</strong> <span id="status1">--</span></div>
+    <div><strong>Label 2:</strong> <span id="status2">--</span></div>
+    <div><strong>Label 3:</strong> <span id="status3">--</span></div>
+    <div><strong>Label 4:</strong> <span id="status4">--</span></div>
+    <div><strong>Label 5:</strong> <span id="status5">--</span></div>
+    <div><strong>Label 6:</strong> <span id="status6">--</span></div>
+  </div>
+  <!-- ...existing code... -->
+
+  <!-- ...existing code... -->
+  <script>
+    const socket = io();
+    socket.emit("chat message", "hallo chat message");
+    socket.on("status", (content) => {
+      console.log(content);
+      // Example: content = { label1: "A", label2: "B", ... }
+      for (let i = 1; i <= 6; i++) {
+        const el = document.getElementById(`status${i}`);
+        if (el && content[`label${i}`] !== undefined) {
+          el.textContent = content[`label${i}`];
+        }
+      }
+    });
+  </script>
+  <!-- ...existing code... -->
+</main>

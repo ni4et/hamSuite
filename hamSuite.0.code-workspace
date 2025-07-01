@@ -4,8 +4,14 @@
       "path": "."
     }
   ],
-  "settings": {},
+  "settings": {
+    "githubPullRequests.remotes": [
+      "upstream"
+    ]
+  },
   "extensions": {
-    "recommendations": ["digitalbrainstem.javascript-ejs-support"]
+    "recommendations": [
+      "digitalbrainstem.javascript-ejs-support"
+    ]
   }
 }

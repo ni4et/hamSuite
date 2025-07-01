@@ -3,19 +3,18 @@ const net = require("net");
 
 const SERVERS = [
   { host: "sam", port: 4532 },
-  //{ host: "sam", port: 4533 },
+  { host: "sam", port: 4533 },
   // Add more servers as needed
 ];
 const QUERIES = [
-  { type: "TX", set: "T", get: "t", re: /(\S+)*/ },
-  { type: "Frequency", set: "set_freq", get: "f", re: /([0-9]+)*/ },
-  { type: "Mode", set: "set_mode", get: "m", re: /(\S+)*/ },
+  { type: "TX", set: "T", get: "t" },
+  { type: "Frequency", set: "set_freq", get: "f" },
+  { type: "Mode", set: "set_mode", get: "m" },
   {
     type: "Power",
     get: "l RFPOWER_METER_WATTS",
-    re: /(\d+(\.?\d*))?/,
   },
-  { type: "SWR", get: "l SWR", re: /(\d+(\.?\d*))?/ },
+  { type: "SWR", get: "l SWR" },
 ];
 
 const clients = [];
