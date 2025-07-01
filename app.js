@@ -17,18 +17,18 @@ require('dotenv').config();
 // This is how items in user, system, and .env are accessed:
 //console.log(process.env.DEBUG);
 
-var createError = require('http-errors');
-var express = require('express');
-var favicon = require('serve-favicon');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const favicon = require('serve-favicon');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var dataRouter = require('./routes/data');
+const indexRouter = require('./routes/index');
+const dataRouter = require('./routes/data');
 
-var livereload = require('livereload');
-var connectLiveReload = require('connect-livereload');
+const livereload = require('livereload');
+const connectLiveReload = require('connect-livereload');
 const liveReloadServer = livereload.createServer();
 
 const { Server } = require('socket.io');
@@ -57,7 +57,7 @@ liveReloadServer.server.once('connection', () => {
 });
 
 // ------------------
-var app = express();
+const app = express();
 // ------------------
 
 // Load the station settings file so that server rendering can use it.
@@ -107,7 +107,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-var qs = require('qs');
+const qs = require('qs');
 app.set('query parser', function (str) {
   return qs.parse(str, {
     /* custom options */
