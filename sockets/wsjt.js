@@ -1,3 +1,6 @@
+let debugPrint = debug('wsjt.js');
+debugPrint('starting wsjt-x socket server');
+
 function wsjtInit() {
   const { Server } = require('socket.io');
   const io = new Server();
@@ -16,15 +19,13 @@ function wsjtInit() {
       console.log('Client disconnected from wsjt-x socket server:', socket.id);
     });
   });
-  let debugPrint = debug('wsjt');
-  debugPrint('starting wsjt-x socket server');
 
   //console.log('wsjt-x socket server starting...');
   //const cluster = require('node:cluster');
   const dgram = require('node:dgram');
   const server = dgram.createSocket('udp4');
   const parser = require('../lib/wsjt-x-parser');
-  const dbgp = require('../lib/dbg').wsjt; // Debugging function for wsjt-x
+
   var clientInfo;
 
   //console.log(server);

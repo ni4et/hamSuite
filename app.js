@@ -1,18 +1,24 @@
 //const dbg = require("./lib/dbg");
 //dbg.app.enabled = true;
 //dbg.app("App debug enabled!"); //console.clear();
+require('dotenv').config();
 
-console.log(
-  '========================================================================'
-);
-// Model for making an async function in a non-module
+debug = require('debug'); // Global on purpose, so that it can be used in any file.
+
+// Enable debug prints if DEBUG_PRINT is set to true in .env and this file is included in DEBUG environment variable.
+
+// Use this pattern to enable debug prints:
+if (process.env.DEBUG_PRINT === 'true' && debug.enabled('app_js')) {
+  let debugPrint = debug('app.js');
+  debugPrint('debug enabled: ' + debug.enabled('app_js'));
+}
+console.log(`debugging:${process.env.DEBUG}`); // Model for making an async function in a non-module
+
 /* 
 (async () => {
   console.log('that');
 })();
 */
-
-require('dotenv').config();
 
 // This is how items in user, system, and .env are accessed:
 //console.log(process.env.DEBUG);
@@ -24,15 +30,28 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Routers in /routes
 const indexRouter = require('./routes/index');
 const dataRouter = require('./routes/data');
 
+// Dubugging stuff
 const livereload = require('livereload');
 const connectLiveReload = require('connect-livereload');
 const liveReloadServer = livereload.createServer();
+// https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
+// https://github.com/livereload/livereload-js
+liveReloadServer.server.once('connection', () => {
+  setTimeout(() => {
+    liveReloadServer.refresh('/');
+  }, 100);
+});
 
+// socket.io setup
 const { Server } = require('socket.io');
+const io = new Server();
 
+// Get the station information, equipment, and network locations.
+// global scope
 stationSettings = require('./public/assets/stationSettings.json');
 const stationSettingsDefault = {};
 
@@ -46,14 +65,6 @@ for (let keya in stationSettings) {
 }
 // stationSettingsDefault will be merged with cookies for rendering
 //console.log(stationSettingsDefault);
-
-// https://dev.to/cassiolacerda/automatically-refresh-the-browser-on-node-express-server-changes-x1f680-1k0o
-// https://github.com/livereload/livereload-js
-liveReloadServer.server.once('connection', () => {
-  setTimeout(() => {
-    liveReloadServer.refresh('/');
-  }, 100);
-});
 
 // ------------------
 const app = express();
@@ -107,6 +118,8 @@ app.use(function (req, res, next) {
 });
 
 const qs = require('qs');
+const { enableCompileCache } = require('module');
+
 app.set('query parser', function (str) {
   return qs.parse(str, {
     /* custom options */
@@ -163,4 +176,9 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
+const wsjtInit = require('./sockets/wsjt');
+wsjtInit();
+
+const pollRadioInit = require('./sockets/pollRadio');
+pollRadioInit();
 module.exports = app;

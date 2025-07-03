@@ -5,6 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "command": "npm watch",
+      "name": "Run npm watch",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "npm start",
       "name": "Run npm start",
       "request": "launch",

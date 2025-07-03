@@ -7,6 +7,7 @@
 //dbg.www.enabled = true;
 //dbg.www("WWW debug enabled!");
 const app = require('../app');
+
 //const debug = require("debug")("hamsuite.0:server");
 const http = require('http');
 
@@ -85,6 +86,3 @@ function onListening() {
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   //debug('Listening on ' + bind);
 }
-
-var initSocketIO = require('../sockets/socket_io_init.js');
-initSocketIO(server);
