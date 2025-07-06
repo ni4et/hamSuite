@@ -25,8 +25,8 @@
     <script>
       var msgCache = {};
 
-      const socket = io();
-      socket.emit("chat message", "hallo there chat message");
+      const socket = io('/hamlib/IC7300');
+      socket.emit('chat message', 'hallo there chat message');
       /*       socket.on("status", (content) => {
                console.log(content);
                $("#configuration").text(content.configuration_name);
@@ -36,16 +36,16 @@
              });
         */
 
-      socket.on("decode", (message) => {
+      socket.on('decode', (message) => {
         //console.log(message.de_call, message);
         msgCache[message.de_call] = message;
         show(message.time);
       });
 
       function show(showTime) {
-        var c = document.getElementById("etchasketch");
-        var ctx = c.getContext("2d");
-        ctx.font = "20px Arial";
+        var c = document.getElementById('etchasketch');
+        var ctx = c.getContext('2d');
+        ctx.font = '20px Arial';
         for (i in msgCache) {
           let phase = (msgCache[i].time / 15000) % 2;
           if (showTime - 15000 < msgCache[i].time) {

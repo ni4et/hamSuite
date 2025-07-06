@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radio Monitor</title>
+    <style>
+      .box {
+        width: 120px;
+        height: 80px;
+        display: inline-block;
+        margin: 10px;
+        background: #f0f0f0;
+        border: 2px solid #333;
+        font-size: 2em;
+        text-align: center;
+        line-height: 80px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Radio Monitor</h1>
+    <div id="boxes">
+      <div class="box" id="box0">0</div>
+      <div class="box" id="box1">0</div>
+      <div class="box" id="box2">0</div>
+      <div class="box" id="box3">0</div>
+      <div class="box" id="box4">0</div>
+      <div class="box" id="box5">0</div>
+    </div>
+    <!-- <script src="https://cdn.socket.io/4.8.1/socket.io.js"></script> -->
+    <script src="socket.io.js"></script>
+    <script>
+      const socket = io();
+          const namespaceID = `/hamlib/IC7300`;
+          const nsp = io(namespaceID);
+          
+
+
+
+      nsp.on('connect', () => {
+        console.log(`Connected to namespace: ${namespaceID}`);
+      });
+      nsp.on('disconnect', () => {
+        console.log(`Disconnected from namespace: ${namespaceID}`);
+      });
+      nsp.on('error', (err) => {
+        console.error(`Error in namespace ${namespaceID}:`, err);
+      });
+      nsp.on('connect_error', (err) => {
+        console.error(`Connection error in namespace ${namespaceID}:`, err);
+      });
+      nsp.on('connect_timeout', (timeout) => {
+        console.error(`Connection timeout in namespace ${namespaceID}:`, timeout);
+      });
+      nsp.on('reconnect', (attempt) => {
+        console.log(`Reconnected to namespace ${namespaceID} after ${attempt} attempts`);
+      });
+      nsp.on('reconnect_attempt', (attempt) => {
+        console.log(`Attempting to reconnect to namespace ${namespaceID}, attempt #${attempt}`);
+      });
+      nsp.on('reconnect_error', (err) => {
+        console.error(`Reconnection error in namespace ${namespaceID}:`, err);
+      });
+      nsp.on('reconnect_failed', () => {
+        console.error(`Failed to reconnect to namespace ${namespaceID}`);
+      });
+      nsp.on('reconnecting', (attempt) => {
+        console.log(`Reconnecting to namespace ${namespaceID}, attempt #${attempt}`);
+      });
+
+      nsp.on('updateBoxes', (updates) => {
+        console.log('Received updates:', updates);
+        updates.forEach((val, idx) => {
+          const box = document.getElementById(`box${idx}`);
+          if (box) box.textContent = val;
+        });
+      });
+    </script>
+  </body>
+</html>

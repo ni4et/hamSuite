@@ -1,7 +1,15 @@
 'use strict';
 // Database access:
 // all requests and responses are json
-
+// npm debug package deployment pattern
+globalThis.process = require('process');
+// Debugging utility - does nothing if DEBUG is not set
+let log = () => {};
+if (process.env.DEBUG) {
+  const path = require('path');
+  log = require('debug')(path.basename(__filename));
+}
+// End of debug utility
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -22,7 +30,7 @@ const upload = multer({}); // Returns the Multer object set for memory storage b
 // Place holder for now
 router.post('/profile', upload.none(), function (req, res, next) {
   // req.body contains the text fields
-  console.log(req);
+  log(req);
 });
 
 router.post('/upload', upload.single('files'), function (req, res, next) {
@@ -31,7 +39,7 @@ router.post('/upload', upload.single('files'), function (req, res, next) {
   if (req.file) {
     uploadHandler(req, res)
       .then((count) => {
-        console.log('count= ', count);
+        log('count= ', count);
         recordCount = count;
       })
       .then(() => {
@@ -49,7 +57,7 @@ router.post('/upload', upload.single('files'), function (req, res, next) {
 //
 router.get('/download', upload.none(), function (req, res, next) {
   // req.body contains the text fields
-  console.log(req.query);
+  log(req.query);
   // If download is requested set header Content-Disposition:inline/attachment
   //Content-Disposition: attachment; filename="logo.png"
   // for adif res.set('Content-Type', 'text/plain')
@@ -107,14 +115,14 @@ let conn = null;
       port: 28015,
     });
     databases = await r.dbList().run(conn);
-    //console.log(databases);
+    //log(databases);
   } catch {
-    console.log('in data.js: failed to open database, is it running?');
+    log('in data.js: failed to open database, is it running?');
   }
 })(); // () gets it called here.
 
 async function dbCheckAndCreate(database) {
-  console.log('dbCheckAndCreate ', database);
+  log('dbCheckAndCreate ', database);
   try {
     if (databases.indexOf(database) < 0) {
       // The database does not exist
@@ -127,7 +135,7 @@ async function dbCheckAndCreate(database) {
         r.db(database).tableCreate('meta').run(conn),
         r.db(database).tableCreate('qrz').run(conn),
       ]);
-      //console.log(result);
+      //log(result);
       databases.push(database);
     }
     return true;
@@ -139,7 +147,7 @@ async function dbCheckAndCreate(database) {
 
 // - upload support:
 async function uploadHandler(req, res) {
-  console.log('uploadHandler()');
+  log('uploadHandler()');
   const database = req.cookies.stationSettings_database;
   const go = await dbCheckAndCreate(database);
 
@@ -158,7 +166,7 @@ async function uploadHandler(req, res) {
 }
 
 async function headerCallback(hdr, options) {
-  console.log('headerCallback() ', hdr);
+  log('headerCallback() ', hdr);
   if (options.metaId) {
     const updateResult = await r
       .db(options.database)
@@ -166,7 +174,7 @@ async function headerCallback(hdr, options) {
       .get(options.metaId)
       .update(hdr)
       .run(conn);
-    console.log('headerCallback() result= ', updateResult);
+    log('headerCallback() result= ', updateResult);
   } else {
     const result = await r
       .db(options.database)
@@ -240,7 +248,7 @@ async function qsoCallback(qso, options) {
   if (options.metaId) {
     qso._metaId = options.metaId;
   }
-  console.log(qso.time_on, qso.id);
+  log(qso.time_on, qso.id);
   const result = await r
     .db(options.database)
     .table('qso')

@@ -17,7 +17,7 @@
       </div>
     </main>
     <script>
-      const socket = io();
+      const socket = io.of('/chat');
       socket.emit("chat message", "hallo chat message");
       socket.on("status", (content) => {
         console.log(content);

@@ -3,17 +3,22 @@
 /**
  * Module dependencies.
  */
-//const dbg = require("../lib/dbg");
-//dbg.www.enabled = true;
-//dbg.www("WWW debug enabled!");
-const app = require('../app');
-
-//const debug = require("debug")("hamsuite.0:server");
+// npm debug package deployment pattern
+globalThis.process = require('process');
+// Debugging utility - does nothing if DEBUG is not set
+let log = () => {};
+if (process.env.DEBUG) {
+  const path = require('path');
+  log = require('debug')(path.basename(__filename));
+}
+// End of debug utility
 const http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
+const app = require('../app.js');
+globalThis.app = app; // Make app available globally
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -24,6 +29,8 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+globalThis.server = server; // Make server available globally
+
 /**
  * Listen on provided port, on all network interfaces.
  */

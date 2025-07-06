@@ -3,16 +3,19 @@
 //dbg.app("App debug enabled!"); //console.clear();
 require('dotenv').config();
 
-debug = require('debug'); // Global on purpose, so that it can be used in any file.
-
-// Enable debug prints if DEBUG_PRINT is set to true in .env and this file is included in DEBUG environment variable.
-
-// Use this pattern to enable debug prints:
-if (process.env.DEBUG_PRINT === 'true' && debug.enabled('app_js')) {
-  let debugPrint = debug('app.js');
-  debugPrint('debug enabled: ' + debug.enabled('app_js'));
+// npm debug package deployment pattern
+globalThis.process = require('process');
+// Debugging utility - does nothing if DEBUG is not set
+let log = () => {};
+if (process.env.DEBUG) {
+  const path = require('path');
+  log = require('debug')(path.basename(__filename));
 }
-console.log(`debugging:${process.env.DEBUG}`); // Model for making an async function in a non-module
+// End of debug utility
+
+console.log(`debugging:${process.env.DEBUG}`);
+
+// Model for making an async function in a non-module
 
 /* 
 (async () => {
@@ -48,11 +51,14 @@ liveReloadServer.server.once('connection', () => {
 
 // socket.io setup
 const { Server } = require('socket.io');
-const io = new Server();
+const io = new Server(globalThis.server, {
+  /* options */
+});
+globalThis.io = io; // Make io available globally
 
 // Get the station information, equipment, and network locations.
 // global scope
-stationSettings = require('./public/assets/stationSettings.json');
+const stationSettings = require('./public/assets/stationSettings.json');
 const stationSettingsDefault = {};
 
 for (let keya in stationSettings) {
@@ -71,7 +77,7 @@ const app = express();
 // ------------------
 
 // Load the station settings file so that server rendering can use it.
-
+globalThis.stationSettings = stationSettings; // Make stationSettings available globally
 app.locals.stationSettings = stationSettings;
 
 // Install live reload js:
@@ -175,10 +181,16 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+log('App loading sub applications...');
 
 const wsjtInit = require('./sockets/wsjt');
 wsjtInit();
 
 const pollRadioInit = require('./sockets/pollRadio');
 pollRadioInit();
+log('App done loading sub applications...');
+io.of('/chat'); //
+const namespaces = Array.from(io._nsps.keys());
+log(namespaces); // e.g., [ '/', '/chat', '/admin', '/a/b/c' ]
+
 module.exports = app;
