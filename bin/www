@@ -30,6 +30,19 @@ app.set('port', port);
 
 const server = http.createServer(app);
 globalThis.server = server; // Make server available globally
+const { Server } = require('socket.io');
+const io = new Server(http, {
+  /* options */
+});
+
+globalThis.io = io; // Make io available globally
+
+///
+io.on('connection', (socket) => {
+  log('new socketio connection established');
+});
+
+////
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -166,6 +166,20 @@ app.get('/\\w+', function (req, res, next) {
   });
 });
 
+const HTMLSupportPath = [
+  './node_modules/socket.io/client-dist',
+  './node_modules/bootstrap/dist/css',
+  './node_modules/bootstrap/dist/js',
+  './node_modules/@popperjs/core/dist/cjs/popper.js',
+];
+// Serve static files from the HTMLSupportPath
+// This is where the HTML support files are located.
+// This is where the socket.io client files are located.
+// Thanks copilot for the suggestion!
+HTMLSupportPath.forEach((path) => {
+  app.use('/', express.static(path));
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -176,6 +190,8 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  log('Error handler called:', err.message);
+  log('URL:', req.url);
 
   // render the error page
   res.status(err.status || 500);
@@ -190,7 +206,7 @@ const pollRadioInit = require('./sockets/pollRadio');
 pollRadioInit();
 log('App done loading sub applications...');
 io.of('/chat'); //
-const namespaces = Array.from(io._nsps.keys());
+const namespaces = Array.from(io._nsps.keys()); // There is a published API for this, but it is not documented.
 log(namespaces); // e.g., [ '/', '/chat', '/admin', '/a/b/c' ]
 
 module.exports = app;

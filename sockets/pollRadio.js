@@ -39,7 +39,7 @@ function pollRadioInit() {
 
   // Set up namespaces for each server
   SERVERS.forEach((serverInfo) => {
-    const namespaceID = `/hamLib/${serverInfo.name}`;
+    const namespaceID = `/hamlib/${serverInfo.name}`;
 
     const nsp = io.of(namespaceID);
 
