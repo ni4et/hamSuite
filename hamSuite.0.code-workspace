@@ -1,17 +1,8 @@
 {
-  "folders": [
-    {
-      "path": "."
-    }
-  ],
-  "settings": {
-    "githubPullRequests.remotes": [
-      "upstream"
-    ]
-  },
-  "extensions": {
-    "recommendations": [
-      "digitalbrainstem.javascript-ejs-support"
-    ]
-  }
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
 }

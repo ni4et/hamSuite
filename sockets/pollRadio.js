@@ -42,6 +42,7 @@ function pollRadioInit() {
     const namespaceID = `/hamlib/${serverInfo.name}`;
 
     const nsp = io.of(namespaceID);
+    log(`creating namespace ${namespaceID}`);
 
     const hamlibSocket = new net.Socket();
     hamlibSocket.counter = 0;
@@ -55,6 +56,7 @@ function pollRadioInit() {
           console.log(`Connected to: ${serverInfo.host}:${serverInfo.port}`);
         });
         hamlibSocket.setNoDelay(true); // Disable Nagle's algorithm.
+        nsp.emit('updateBoxes', [1, 2, 3, 4, 5, 6]);
       }
       ///
       socket.on(

@@ -13,7 +13,7 @@ if (process.env.DEBUG) {
 }
 // End of debug utility
 
-console.log(`debugging:${process.env.DEBUG}`);
+log(`debugging:${process.env.DEBUG}`);
 
 // Model for making an async function in a non-module
 
@@ -49,12 +49,12 @@ liveReloadServer.server.once('connection', () => {
   }, 100);
 });
 
-// socket.io setup
+`// socket.io setup
 const { Server } = require('socket.io');
 const io = new Server(globalThis.server, {
   /* options */
-});
-globalThis.io = io; // Make io available globally
+}); `;
+//globalThis.io = io; // Make io available globally
 
 // Get the station information, equipment, and network locations.
 // global scope
